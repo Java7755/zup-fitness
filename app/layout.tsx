@@ -15,11 +15,11 @@ export default function RootLayout({
     <html lang="es">
       <body className="bg-black text-white">
         
-        {/* 👇 ACÁ SE MUESTRA EL HEADER */}
+        {/* Header global */}
         <Header />
 
-        {/* 👇 CONTENIDO DE TODAS LAS PÁGINAS */}
-        <main className="pt-24">
+        {/* Contenido */}
+        <main>
           {children}
         </main>
 

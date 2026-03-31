@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 
 const plans = [
   { 
@@ -25,84 +26,122 @@ const plans = [
 ]
 
 export default function Plans() {
+  const [hovered, setHovered] = useState<number | null>(null)
+
+  const phone = "5491161883321"
+
   return (
     <section id="plans" className="py-20 bg-black text-white text-center px-4">
       
-      {/* TITULO */}
       <h2 className="text-4xl md:text-5xl font-bold mb-4">
-        Elegí tu transformación
+        Elegí tu transformación ⚡
       </h2>
 
       <p className="text-gray-400 mb-12 max-w-xl mx-auto">
         No es solo entrenar. Es tener un sistema que te haga avanzar de verdad.
       </p>
 
-      {/* CARDS */}
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {plans.map((plan) => (
-          <div 
-            key={plan.title} 
-            className={`p-8 rounded-2xl border transition-all duration-300 
-            ${plan.highlight 
-              ? "border-red-500 scale-105 bg-white/5 shadow-xl" 
-              : "border-white/10 hover:border-white/30"
-            }`}
-          >
-            
-            {/* BADGE */}
-            {plan.highlight && (
-              <p className="text-red-500 font-semibold mb-2">
-                Más elegido 🔥
+
+        {plans.map((plan, i) => {
+          const isCenter = plan.highlight
+
+          const mainMessage = `Hola! Quiero empezar hoy con el plan ${plan.title} 💪 ¿Cómo sigo?`
+          const secondaryMessage = `Hola, quiero más info sobre el plan ${plan.title}`
+
+          return (
+            <div 
+              key={plan.title}
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              className={`
+                relative p-8 rounded-2xl border
+                transition-all duration-300
+                bg-gradient-to-b from-gray-800 to-gray-900
+                overflow-hidden
+
+                ${isCenter 
+                  ? "border-yellow-400 scale-105 shadow-[0_0_30px_rgba(255,255,0,0.25)] z-10" 
+                  : "border-white/10"
+                }
+
+                ${hovered !== null && hovered !== i 
+                  ? "opacity-60 scale-95" 
+                  : ""
+                }
+
+                ${hovered === i && !isCenter 
+                  ? "border-yellow-400 shadow-[0_0_20px_rgba(255,255,0,0.2)] scale-105" 
+                  : ""
+                }
+              `}
+            >
+
+              {/* ⚡ RAYO */}
+              <span className="absolute top-2 right-3 text-yellow-400 opacity-20 text-2xl">
+                ⚡
+              </span>
+
+              {/* BADGE */}
+              {isCenter && (
+                <div className="mb-3 inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-400 text-black shadow-md">
+                  MÁS ELEGIDO
+                </div>
+              )}
+
+              <h3 className="text-2xl font-semibold mb-2">
+                {plan.title}
+              </h3>
+
+              <p className="text-gray-400 mb-4">
+                {plan.description}
               </p>
-            )}
 
-            {/* TITLE */}
-            <h3 className="text-2xl font-semibold mb-2">
-              {plan.title}
-            </h3>
+              <p className="text-3xl font-bold mb-6 text-yellow-400">
+                {plan.price}
+              </p>
 
-            {/* DESC */}
-            <p className="text-gray-400 mb-4">
-              {plan.description}
-            </p>
+              <ul className="mb-8 space-y-2 text-gray-300">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-center gap-2 justify-center">
+                    <span className="text-yellow-400">✔</span> {f}
+                  </li>
+                ))}
+              </ul>
 
-            {/* PRICE */}
-            <p className="text-3xl font-bold mb-6">
-              {plan.price}
-            </p>
+              {/* CTA */}
+              <div className="flex flex-col gap-3">
+                
+                {/* CTA PRINCIPAL → WHATSAPP */}
+                <a 
+                  href={`https://wa.me/${phone}?text=${encodeURIComponent(mainMessage)}`}
+                  target="_blank"
+                  className={`
+                    px-6 py-3 rounded-xl font-bold transition 
+                    ${isCenter 
+                      ? "bg-yellow-400 text-black hover:scale-105" 
+                      : "border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                    }
+                  `}
+                >
+                  Empezar ahora
+                </a>
 
-            {/* FEATURES */}
-            <ul className="mb-8 space-y-2 text-gray-300">
-              {plan.features.map((f) => (
-                <li key={f}>✔ {f}</li>
-              ))}
-            </ul>
+                {/* CTA SECUNDARIO */}
+                <a 
+                  href={`https://wa.me/${phone}?text=${encodeURIComponent(secondaryMessage)}`}
+                  target="_blank"
+                  className="text-sm text-gray-400 hover:text-yellow-400 transition"
+                >
+                  Consultar por WhatsApp
+                </a>
 
-            {/* CTA */}
-            <div className="flex flex-col gap-3">
-              
-              <a 
-                href="/reto-21-dias"
-                className={`px-6 py-3 rounded-xl font-bold transition 
-                ${plan.highlight 
-                  ? "bg-red-600 hover:bg-red-700 text-white" 
-                  : "border border-white hover:bg-white hover:text-black"
-                }`}
-              >
-                Empezar ahora
-              </a>
-
-              <a 
-                href="https://wa.me/5491161883321"
-                className="text-sm text-gray-400 hover:text-white"
-              >
-                Consultar por WhatsApp
-              </a>
+              </div>
 
             </div>
+          )
+        })}
 
-          </div>
-        ))}
       </div>
     </section>
   )
