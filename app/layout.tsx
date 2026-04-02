@@ -14,12 +14,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="bg-black text-white">
-        
+
         {/* Header global */}
         <Header />
 
-        {/* Contenido */}
-        <main>
+        {/* Contenido principal */}
+        <main className="pt-24 min-h-screen">
           {children}
         </main>
 
