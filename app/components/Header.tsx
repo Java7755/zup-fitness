@@ -9,43 +9,28 @@ export default function Header() {
   return (
     <header className="
       w-full fixed top-0 z-50
-      backdrop-blur-md
       border-b border-yellow-400/20
-      bg-black/70
+      bg-gray-900
       [background-image:
-        linear-gradient(120deg,rgba(250,204,21,0.15),rgba(0,0,0,0.6),rgba(250,204,21,0.15)),
-        repeating-linear-gradient(120deg,rgba(255,255,255,0.04)_0px,rgba(255,255,255,0.04)_2px,transparent_2px,transparent_6px)
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(120deg,#2c2c2c,#1f1f1f,#3b3b3b),
+        repeating-linear-gradient(120deg, rgba(139,69,19,0.15) 0px, rgba(139,69,19,0.15) 2px, transparent 2px, transparent 6px)
       ]
+      [background-size: 20px 20px, 20px 20px, auto, auto]
     ">
 
-      {/* Línea glow animada */}
+      {/* Línea glow */}
       <div className="h-[2px] w-full bg-gradient-to-r from-yellow-400 via-blue-400 to-violet-500 opacity-70"></div>
 
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         
-        {/* 🔥 Logo + Marca */}
-        <Link 
-          href="/" 
-          className="flex items-center gap-0 hover:scale-105 transition"
-        >
+        {/* 🔥 Logo + HOME */}
+        <Link href="/" className="flex items-center gap-1 hover:scale-105 transition">
           <div className="relative w-16 h-16 flex items-center justify-center">
-            
-            {/* 🔥 Núcleo de energía */}
-            <div className="
-              absolute w-12 h-12 rounded-full
-              bg-yellow-400/10
-              blur-xl
-              z-0
-            " />
-
-            {/* 🔥 Anillo MEJORADO */}
+            <div className="absolute w-12 h-12 rounded-full bg-yellow-400/10 blur-xl z-0" />
             <div
-              className="
-                absolute inset-0 rounded-full
-                animate-[spin_4s_linear_infinite]
-                opacity-90
-                blur-[1px]
-              "
+              className="absolute inset-0 rounded-full animate-[spin_4s_linear_infinite] opacity-90 blur-[1px]"
               style={{
                 background: "conic-gradient(#facc15, #facc15, #60a5fa, #a78bfa, #facc15)",
                 WebkitMask: "radial-gradient(circle, transparent 65%, black 66%)",
@@ -53,90 +38,53 @@ export default function Header() {
                 boxShadow: "0 0 20px #facc15, 0 0 40px #a78bfa"
               }}
             />
-
-            {/* Logo */}
-            <div className="
-              w-14 h-14 relative 
-              rounded-full overflow-hidden 
-              border border-violet-400/40
-              bg-black z-10
-            ">
+            <div className="w-14 h-14 relative rounded-full overflow-hidden border border-violet-400/40 bg-black z-10">
               <Image
                 src="/logo1.png"
                 alt="Z-UP Fitness"
                 fill
-                className="object-cover"
+                sizes="56px"
+                className="object-cover object-center"
                 priority
               />
             </div>
           </div>
 
-          {/* ⚡ Marca ajustada PRO */}
           <div className="flex items-center -ml-0.5">
-            
-            {/* ⚡ más separado del logo */}
-            <span className="mr-0.5 text-xl">
-              ⚡
-            </span>
-
-            {/* Texto pegado al rayo */}
-            <span className="
-              text-2xl font-extrabold tracking-wide 
-              text-violet-400 
-              drop-shadow-[0_0_12px_#8b5cf6]
-            ">
+            <span className="mr-0.5 text-xl">⚡</span>
+            <span className="text-2xl font-extrabold tracking-wide text-violet-400 drop-shadow-[0_0_12px_#8b5cf6]">
               HOME
             </span>
-
           </div>
         </Link>
 
-        {/* 🔥 Menu mejorado */}
+        {/* 🔥 NAV */}
         <nav className="hidden md:flex gap-10 text-[13px] font-semibold uppercase tracking-[0.15em]">
-          {["Noti-Fitness", "Método", "Programas", "Coaching", "Recursos"].map((link) => (
+          {[
+            { name: "Resultados", href: "/resultados", highlight: true },
+            { name: "Método", href: "/metodo" },
+            { name: "Programas", href: "/programas" },
+            { name: "Noti-ZUP", href: "/noticias" }
+          ].map((link) => (
             <Link
-              key={link}
-              href={`/${link.toLowerCase().replace(/ /g, "-")}`}
-              className="
-                text-white/70
-                hover:text-yellow-400
-                transition-all duration-300
-                relative
-                group
-              "
+              key={link.name}
+              href={link.href}
+              className={`relative group transition-all duration-300 ${
+                link.highlight ? "text-yellow-400" : "text-white/70 hover:text-yellow-400"
+              }`}
             >
               <span className="group-hover:scale-105 inline-block transition">
-                {link}
+                {link.name}
               </span>
-
-              <span className="
-                absolute left-0 -bottom-1
-                w-0 h-[2px]
-                bg-yellow-400
-                transition-all duration-300
-                group-hover:w-full
-              " />
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </nav>
 
-        {/* 🔥 Right section PRO */}
-        <div className="flex items-center gap-3">
-          
-          <Link href="/programas">
-            <button className="
-              hidden md:block 
-              border border-yellow-400 
-              text-yellow-400 
-              px-4 py-2 rounded-xl 
-              hover:bg-yellow-400 
-              hover:text-black 
-              transition
-            ">
-              Ver programas
-            </button>
-          </Link>
+        {/* 🔥 DERECHA */}
+        <div className="flex items-center justify-end gap-3">
 
+          {/* Botón Reto 21 días */}
           <Link href="/reto-21-dias">
             <button className="
               bg-yellow-400 text-black 
@@ -145,58 +93,46 @@ export default function Header() {
               hover:scale-105 
               hover:shadow-[0_0_25px_#facc15]
               transition
+              mr-10
             ">
               ⚡ Reto 21 días
             </button>
           </Link>
 
-          {/* 🔥 Usuario */}
+          {/* Usuario → Icono profesional con glow suave */}
           <Link href="/perfil">
             <div className="
-              w-10 h-10 flex items-center justify-center
+              w-12 h-12 flex items-center justify-center
               rounded-full
-              bg-white/5
-              border border-white/10
-              backdrop-blur-md
+              bg-gradient-to-tr from-yellow-500/80 via-orange-400/80 to-red-500/80
+              border-2 border-white/20
+              shadow-[0_0_8px_#facc15,0_0_12px_#a78bfa]
               cursor-pointer
               transition-all duration-300
-              hover:bg-yellow-400
-              hover:border-yellow-400
-              hover:shadow-[0_0_15px_#facc15]
+              hover:scale-110
+              hover:shadow-[0_0_12px_#facc15,0_0_20px_#a78bfa]
               group
             ">
-              <User className="
-                w-5 h-5
-                text-white/80
-                transition
-                group-hover:text-black
-              " />
+              <User className="w-6 h-6 text-white/90 transition" />
             </div>
           </Link>
 
-          {/* 🛒 Carrito */}
+          {/* Carrito → Icono profesional con glow suave */}
           <Link href="/carrito">
             <div className="
               relative
-              w-10 h-10 flex items-center justify-center
+              w-12 h-12 flex items-center justify-center
               rounded-full
-              bg-white/5
-              border border-white/10
-              backdrop-blur-md
+              bg-gradient-to-tr from-blue-500/80 via-cyan-400/80 to-teal-500/80
+              border-2 border-white/20
+              shadow-[0_0_8px_#60a5fa,0_0_12px_#3b82f6]
               cursor-pointer
               transition-all duration-300
-              hover:bg-blue-400
-              hover:border-blue-400
-              hover:shadow-[0_0_15px_#60a5fa]
+              hover:scale-110
+              hover:shadow-[0_0_12px_#60a5fa,0_0_20px_#3b82f6]
               group
             ">
-              <ShoppingCart className="
-                w-5 h-5
-                text-white/80
-                transition
-                group-hover:text-black
-              " />
-
+              <ShoppingCart className="w-6 h-6 text-white/90 transition" />
               <span className="
                 absolute -top-1.5 -right-1.5
                 text-[10px]
