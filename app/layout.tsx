@@ -1,6 +1,7 @@
 // app/layout.tsx
 import './globals.css'
 import Header from './components/Header'
+import FloatingIcons from './components/FloatingIcons' // 👈 IMPORTANTE
 
 export const metadata = {
   title: 'ZUP Fitness',
@@ -14,7 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className="
+      <body
+        className="
         text-white
         bg-gray-900
         [background-image:
@@ -23,7 +25,8 @@ export default function RootLayout({
         ]
         [background-size: auto, 40px 40px]
         [background-blend-mode: overlay]
-      ">
+      "
+      >
 
         {/* Header global */}
         <Header />
@@ -32,6 +35,9 @@ export default function RootLayout({
         <main className="pt-24 min-h-screen">
           {children}
         </main>
+
+        {/* ICONOS FLOTANTES 🔥 */}
+        <FloatingIcons />
 
       </body>
     </html>

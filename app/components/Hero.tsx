@@ -41,7 +41,7 @@ export default function Hero() {
           className="max-w-4xl"
         >
 
-          {/* 🔴 INSTAGRAM CON PRUEBA SOCIAL */}
+          {/* 🔴 INSTAGRAM */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -68,7 +68,6 @@ export default function Hero() {
               "
             >
 
-              {/* 🔥 ICONO ANIMADO */}
               <motion.div
                 animate={{ y: [0, -2, 0] }}
                 transition={{ repeat: Infinity, duration: 1.2 }}
@@ -142,6 +141,7 @@ export default function Hero() {
             className="flex gap-4 justify-center flex-wrap"
           >
 
+            {/* CTA PRINCIPAL */}
             <a
               href={`https://wa.me/${phone}?text=${encodeURIComponent(message)}`}
               target="_blank"
@@ -159,17 +159,19 @@ export default function Hero() {
               ⚡ Empezar ahora
             </a>
 
+            {/* CTA SECUNDARIO (SCROLL) */}
             <a
-              href="#metodo"
+              href="#como-funciona"
               className="
                 px-8 py-4 
                 border border-white/20 text-white font-semibold 
                 rounded-xl 
                 hover:bg-white/10 
+                hover:scale-105
                 transition-all duration-300
               "
             >
-              Ver cómo funciona
+              Ver cómo funciona ↓
             </a>
 
           </motion.div>
@@ -179,7 +181,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="text-xs text-gray-500 mt-6 mb-12" // ← mb-12 agrega espacio hacia la columna de beneficios
+            className="text-xs text-gray-500 mt-6 mb-12"
           >
             ⚠️ Cupos limitados esta semana
           </motion.p>

@@ -57,12 +57,19 @@ export default function Plans() {
               className={`
                 relative p-8 rounded-2xl border
                 transition-all duration-300
-                bg-gradient-to-b from-gray-800 to-gray-900
                 overflow-hidden
 
                 ${isCenter 
-                  ? "border-yellow-400 scale-105 shadow-[0_0_30px_rgba(255,255,0,0.25)] z-10" 
-                  : "border-white/10"
+                  ? `
+                    bg-gradient-to-b from-[#1a1a1a] via-[#2a2a2a] to-[#111]
+                    border-yellow-400
+                    scale-105
+                    shadow-[0_0_40px_rgba(255,215,0,0.25)]
+                  `
+                  : `
+                    bg-gradient-to-b from-gray-800 to-gray-900
+                    border-white/10
+                  `
                 }
 
                 ${hovered !== null && hovered !== i 
@@ -77,6 +84,11 @@ export default function Plans() {
               `}
             >
 
+              {/* ✨ GLOW DORADO SUTIL */}
+              {isCenter && (
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.15),transparent_60%)] pointer-events-none" />
+              )}
+
               {/* ⚡ RAYO */}
               <span className="absolute top-2 right-3 text-yellow-400 opacity-20 text-2xl">
                 ⚡
@@ -84,12 +96,14 @@ export default function Plans() {
 
               {/* BADGE */}
               {isCenter && (
-                <div className="mb-3 inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-400 text-black shadow-md">
+                <div className="mb-3 inline-block px-4 py-1 text-xs font-semibold rounded-full 
+                  bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 
+                  text-black shadow-md">
                   MÁS ELEGIDO
                 </div>
               )}
 
-              <h3 className="text-2xl font-semibold mb-2">
+              <h3 className={`text-2xl font-semibold mb-2 ${isCenter ? "text-yellow-300" : ""}`}>
                 {plan.title}
               </h3>
 
@@ -97,7 +111,7 @@ export default function Plans() {
                 {plan.description}
               </p>
 
-              <p className="text-3xl font-bold mb-6 text-yellow-400">
+              <p className={`text-3xl font-bold mb-6 ${isCenter ? "text-yellow-300" : "text-yellow-400"}`}>
                 {plan.price}
               </p>
 
@@ -112,14 +126,14 @@ export default function Plans() {
               {/* CTA */}
               <div className="flex flex-col gap-3">
                 
-                {/* CTA PRINCIPAL → WHATSAPP */}
+                {/* CTA PRINCIPAL */}
                 <a 
                   href={`https://wa.me/${phone}?text=${encodeURIComponent(mainMessage)}`}
                   target="_blank"
                   className={`
                     px-6 py-3 rounded-xl font-bold transition 
                     ${isCenter 
-                      ? "bg-yellow-400 text-black hover:scale-105" 
+                      ? "bg-gradient-to-r from-yellow-300 to-yellow-500 text-black shadow-lg hover:scale-105" 
                       : "border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
                     }
                   `}
