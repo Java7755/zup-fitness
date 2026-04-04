@@ -59,7 +59,7 @@ export default function Header() {
         </Link>
 
         {/* 🔥 NAV */}
-        <nav className="hidden md:flex gap-10 text-[13px] font-semibold uppercase tracking-[0.15em]">
+        <nav className="hidden md:flex gap-8 text-[13px] font-semibold uppercase tracking-[0.15em] items-center">
           {[
             { name: "Resultados", href: "/resultados", highlight: true },
             { name: "Método", href: "/metodo" },
@@ -70,13 +70,21 @@ export default function Header() {
               key={link.name}
               href={link.href}
               className={`relative group transition-all duration-300 ${
-                link.highlight ? "text-yellow-400" : "text-white/70 hover:text-yellow-400"
+                link.highlight
+                  ? "px-4 py-1.5 rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 text-black font-bold shadow-[0_0_12px_#ff4d00]"
+                  : "text-white/70 hover:text-yellow-400"
               }`}
             >
-              <span className="group-hover:scale-105 inline-block transition">
-                {link.name}
+              <span className={`inline-block transition ${
+                link.highlight ? "group-hover:scale-110" : "group-hover:scale-105"
+              }`}>
+                {link.highlight ? "🔥 RESULTADOS" : link.name}
               </span>
-              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+
+              {/* underline SOLO para los normales */}
+              {!link.highlight && (
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              )}
             </Link>
           ))}
         </nav>
@@ -99,7 +107,7 @@ export default function Header() {
             </button>
           </Link>
 
-          {/* Usuario → Icono profesional con glow suave */}
+          {/* Usuario */}
           <Link href="/perfil">
             <div className="
               w-12 h-12 flex items-center justify-center
@@ -117,7 +125,7 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Carrito → Icono profesional con glow suave */}
+          {/* Carrito */}
           <Link href="/carrito">
             <div className="
               relative
