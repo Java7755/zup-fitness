@@ -22,14 +22,17 @@ export default function Hero() {
         <source src="/video-hero.mp4" type="video/mp4" />
       </video>
 
-      {/* 🔥 OVERLAY OSCURO */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+      {/* 🔥 OVERLAY BASE */}
+      <div className="absolute inset-0 bg-black/60" />
 
-      {/* 🔥 GRADIENTE PROFUNDIDAD */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-black/90" />
+      {/* 🎬 EFECTO CINEMÁTICO LATERAL */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70" />
 
-      {/* 🔥 GLOW CENTRAL SUAVE */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.12),transparent_70%)]" />
+      {/* 🔥 PROFUNDIDAD VERTICAL */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
+
+      {/* ✨ GLOW CENTRAL PREMIUM (MUY SUTIL) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.06),transparent_70%)]" />
 
       {/* CONTENIDO */}
       <div className="relative z-10 flex flex-col justify-center items-center text-center px-4 pt-28 min-h-screen">
@@ -90,19 +93,23 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* 💥 TITULO */}
+          {/* 💥 TITULO PRO */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight"
+            className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight"
           >
             Transformá tu cuerpo en{" "}
-            <span className="text-yellow-400 drop-shadow-[0_0_15px_#facc15]">
+            <span className="
+              bg-gradient-to-r from-amber-300 to-yellow-400
+              bg-clip-text text-transparent
+              drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]
+            ">
               21 días
             </span>
             <br />
-            <span className="text-white/90">
+            <span className="text-white/80">
               sin dietas extremas ni perder tiempo
             </span>
           </motion.h1>
@@ -133,7 +140,7 @@ export default function Hero() {
             <span className="text-gray-500">📈 Cambios en semanas</span>
           </motion.div>
 
-          {/* 🔥 BOTONES */}
+          {/* 🔥 BOTONES PRO */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1 }}
@@ -141,25 +148,25 @@ export default function Hero() {
             className="flex gap-4 justify-center flex-wrap"
           >
 
-            {/* CTA PRINCIPAL */}
             <a
               href={`https://wa.me/${phone}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="
                 px-8 py-4 
-                bg-yellow-400 text-black font-bold 
+                bg-gradient-to-r from-amber-300 to-yellow-400
+                text-black font-bold 
                 rounded-xl 
-                shadow-[0_0_20px_#facc15]
+                shadow-[0_10px_30px_rgba(251,191,36,0.35)]
                 hover:scale-105 
-                hover:shadow-[0_0_35px_#facc15]
+                hover:shadow-[0_15px_40px_rgba(251,191,36,0.5)]
+                active:scale-95
                 transition-all duration-300
               "
             >
               ⚡ Empezar ahora
             </a>
 
-            {/* CTA SECUNDARIO (SCROLL) */}
             <a
               href="#como-funciona"
               className="
@@ -176,7 +183,6 @@ export default function Hero() {
 
           </motion.div>
 
-          {/* ⚠️ URGENCIA */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

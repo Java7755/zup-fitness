@@ -70,24 +70,55 @@ Mi nombre es ${form.nombre}.
   }
 
   return (
-    <div className="bg-black text-white scroll-smooth">
+    <div className="relative bg-black text-white scroll-smooth overflow-hidden">
 
-      {/* HERO */}
-      <section className="py-24 text-center px-4">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          Transformá tu cuerpo en{" "}
-          <span className="text-yellow-400">21 días</span>
-        </h1>
+      {/* 🔥 FONDO GLOBAL PREMIUM */}
+      <div className="absolute inset-0 -z-10
+        [background-image:
+          radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.05),transparent_40%),
+          radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.04),transparent_40%)
+        ]
+      " />
 
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-          Sistema simple. Resultados reales. Sin vueltas.
-        </p>
+      {/* ================= HERO ================= */}
+      <section className="relative py-28 text-center px-4 overflow-hidden">
+
+        {/* overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80" />
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            Transformá tu cuerpo en{" "}
+            <span className="text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.6)]">
+              21 días
+            </span>
+          </h1>
+
+          <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl">
+            Sistema simple. Resultados reales.
+            <br />
+            <span className="text-white font-semibold">
+              Sin vueltas.
+            </span>
+          </p>
+
+          <div className="mt-6 flex justify-center gap-4 flex-wrap text-sm text-gray-400">
+            <span>🔥 +100 ya empezaron</span>
+            <span>⭐ Resultados reales</span>
+            <span>⏳ Cupos limitados</span>
+          </div>
+
+        </div>
       </section>
 
-      {/* 🎟️ TICKET CTA */}
-      <section className="flex justify-center py-20 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+      {/* ================= TICKET ================= */}
+      <section className="flex justify-center py-20 px-4 relative">
 
-        <a href="#formulario" className="w-full max-w-xl group cursor-pointer">
+        {/* fondo integrado */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/60 to-black" />
+
+        <a href="#formulario" className="w-full max-w-xl group cursor-pointer relative z-10">
 
           <div className="absolute inset-0 bg-yellow-400/20 blur-3xl rounded-2xl opacity-70 group-hover:opacity-100 transition-all duration-500" />
 
@@ -140,7 +171,7 @@ Mi nombre es ${form.nombre}.
 
       </section>
 
-      {/* FORM */}
+      {/* ================= FORM ================= */}
       <section id="formulario" className="py-20 px-4 scroll-mt-24">
         <div className="max-w-md mx-auto bg-gradient-to-b from-gray-900 to-black p-8 rounded-2xl border border-white/10">
 

@@ -1,65 +1,127 @@
-// components/Header.tsx
 'use client'
 
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, User } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const router = useRouter();
+
+  const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+
+  // 🔐 detectar sesión
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+
+    getUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  // scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleUserClick = () => {
+    if (user) {
+      router.push("/perfil");
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
-    <header className="
+    <header className={`
       w-full fixed top-0 z-50
-      border-b border-yellow-400/20
-      bg-gray-900
+      border-b transition-all duration-500
+
+      ${scrolled 
+        ? "border-amber-300/20 bg-gray-900/80 backdrop-blur-xl"
+        : "border-transparent bg-gray-900/95"
+      }
+
       [background-image:
         linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
         linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(120deg,#2c2c2c,#1f1f1f,#3b3b3b),
-        repeating-linear-gradient(120deg, rgba(139,69,19,0.15) 0px, rgba(139,69,19,0.15) 2px, transparent 2px, transparent 6px)
+        linear-gradient(120deg,#2c2c2c,#1f1f1f,#3b3b3b)
       ]
-      [background-size: 20px 20px, 20px 20px, auto, auto]
-    ">
+      [background-size: 20px 20px, 20px 20px, auto]
+    `}>
 
-      {/* Línea glow */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-yellow-400 via-blue-400 to-violet-500 opacity-70"></div>
+      {/* 🔥 LÍNEA PREMIUM */}
+      <div className={`
+        h-[2px] w-full transition-all duration-500
+        ${scrolled ? "opacity-70" : "opacity-40"}
+        bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400
+      `} />
 
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        
-        {/* 🔥 Logo + HOME */}
-        <Link href="/" className="flex items-center gap-1 hover:scale-105 transition">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        {/* 🔥 LOGO */}
+        <Link href="/" className="group flex items-center">
           <div className="relative w-16 h-16 flex items-center justify-center">
-            <div className="absolute w-12 h-12 rounded-full bg-yellow-400/10 blur-xl z-0" />
+
+            <div className={`
+              absolute w-12 h-12 rounded-full blur-xl transition-all duration-500
+              ${isHome 
+                ? "bg-amber-300/30 scale-125"
+                : "bg-amber-300/10 group-hover:bg-amber-300/30 group-hover:scale-125"
+              }
+            `} />
+
             <div
-              className="absolute inset-0 rounded-full animate-[spin_4s_linear_infinite] opacity-90 blur-[1px]"
+              className="absolute inset-0 rounded-full animate-[spin_6s_linear_infinite] opacity-70"
               style={{
-                background: "conic-gradient(#facc15, #facc15, #60a5fa, #a78bfa, #facc15)",
+                background: "conic-gradient(#fcd34d, #fcd34d, #60a5fa, #a78bfa, #fcd34d)",
                 WebkitMask: "radial-gradient(circle, transparent 65%, black 66%)",
-                mask: "radial-gradient(circle, transparent 65%, black 66%)",
-                boxShadow: "0 0 20px #facc15, 0 0 40px #a78bfa"
+                mask: "radial-gradient(circle, transparent 65%, black 66%)"
               }}
             />
-            <div className="w-14 h-14 relative rounded-full overflow-hidden border border-violet-400/40 bg-black z-10">
+
+            <div className="
+              w-14 h-14 relative rounded-full overflow-hidden 
+              border border-white/10 bg-black z-10
+              transition-transform duration-300
+              group-hover:scale-105
+            ">
               <Image
                 src="/logo1.png"
                 alt="Z-UP Fitness"
                 fill
-                sizes="56px"
-                className="object-cover object-center"
+                className="object-cover"
                 priority
               />
             </div>
           </div>
-
-          <div className="flex items-center -ml-0.5">
-            <span className="mr-0.5 text-xl">⚡</span>
-            <span className="text-2xl font-extrabold tracking-wide text-violet-400 drop-shadow-[0_0_12px_#8b5cf6]">
-              HOME
-            </span>
-          </div>
         </Link>
 
-        {/* 🔥 NAV */}
-        <nav className="hidden md:flex gap-8 text-[13px] font-semibold uppercase tracking-[0.15em] items-center">
+        {/* NAV */}
+        <nav className="hidden md:flex gap-8 text-[13px] font-semibold uppercase tracking-[0.18em] items-center">
           {[
             { name: "Resultados", href: "/resultados", highlight: true },
             { name: "Método", href: "/metodo" },
@@ -71,8 +133,8 @@ export default function Header() {
               href={link.href}
               className={`relative group transition-all duration-300 ${
                 link.highlight
-                  ? "px-4 py-1.5 rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 text-black font-bold shadow-[0_0_12px_#ff4d00]"
-                  : "text-white/70 hover:text-yellow-400"
+                  ? "px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-400 text-black font-bold shadow-[0_8px_20px_rgba(251,191,36,0.4)]"
+                  : "text-white/70 hover:text-amber-300"
               }`}
             >
               <span className={`inline-block transition ${
@@ -81,73 +143,89 @@ export default function Header() {
                 {link.highlight ? "🔥 RESULTADOS" : link.name}
               </span>
 
-              {/* underline SOLO para los normales */}
               {!link.highlight && (
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-amber-300 transition-all duration-300 group-hover:w-full" />
               )}
             </Link>
           ))}
         </nav>
 
-        {/* 🔥 DERECHA */}
+        {/* DERECHA */}
         <div className="flex items-center justify-end gap-3">
 
-          {/* Botón Reto 21 días */}
+          {/* RETO */}
           <Link href="/reto-21-dias">
             <button className="
-              bg-yellow-400 text-black 
-              font-bold px-5 py-2 rounded-xl 
-              shadow-[0_0_15px_#facc15]
+              px-6 py-2.5
+              bg-gradient-to-r from-amber-300 to-yellow-400
+              text-black font-bold 
+              rounded-xl 
+              shadow-[0_10px_30px_rgba(251,191,36,0.35)]
               hover:scale-105 
-              hover:shadow-[0_0_25px_#facc15]
-              transition
-              mr-10
+              hover:shadow-[0_15px_40px_rgba(251,191,36,0.5)]
+              active:scale-95
+              transition-all duration-300
             ">
               ⚡ Reto 21 días
             </button>
           </Link>
 
-          {/* Usuario */}
-          <Link href="/perfil">
-            <div className="
-              w-12 h-12 flex items-center justify-center
+          {/* REGISTER */}
+          <Link href="/register">
+            <button className="
+              px-5 py-2.5
+              bg-white/10
+              text-white font-semibold
+              border border-white/20
+              rounded-xl
+              backdrop-blur-md
+              hover:bg-white/20
+              hover:scale-105
+              transition-all duration-300
+            ">
+              Registrate
+            </button>
+          </Link>
+
+          {/* LOGIN / PERFIL (SIN any, TIPADO) */}
+          <div
+            onClick={handleUserClick}
+            className="
+              w-11 h-11 flex items-center justify-center
               rounded-full
-              bg-gradient-to-tr from-yellow-500/80 via-orange-400/80 to-red-500/80
-              border-2 border-white/20
-              shadow-[0_0_8px_#facc15,0_0_12px_#a78bfa]
+              bg-gradient-to-tr from-amber-400/80 via-orange-400/80 to-red-500/80
+              border border-white/10
+              shadow-[0_0_10px_rgba(251,191,36,0.4)]
               cursor-pointer
               transition-all duration-300
               hover:scale-110
-              hover:shadow-[0_0_12px_#facc15,0_0_20px_#a78bfa]
-              group
-            ">
-              <User className="w-6 h-6 text-white/90 transition" />
-            </div>
-          </Link>
+            "
+          >
+            <User className="w-5 h-5 text-white/90" />
+          </div>
 
-          {/* Carrito */}
+          {/* CARRITO */}
           <Link href="/carrito">
             <div className="
               relative
-              w-12 h-12 flex items-center justify-center
+              w-11 h-11 flex items-center justify-center
               rounded-full
-              bg-gradient-to-tr from-blue-500/80 via-cyan-400/80 to-teal-500/80
-              border-2 border-white/20
-              shadow-[0_0_8px_#60a5fa,0_0_12px_#3b82f6]
+              bg-gradient-to-tr from-blue-500/80 via-cyan-400/80 to-teal-400/80
+              border border-white/10
+              shadow-[0_0_10px_rgba(96,165,250,0.4)]
               cursor-pointer
               transition-all duration-300
               hover:scale-110
-              hover:shadow-[0_0_12px_#60a5fa,0_0_20px_#3b82f6]
-              group
             ">
-              <ShoppingCart className="w-6 h-6 text-white/90 transition" />
+              <ShoppingCart className="w-5 h-5 text-white/90" />
+
               <span className="
                 absolute -top-1.5 -right-1.5
                 text-[10px]
-                bg-yellow-400 text-black
+                bg-amber-300 text-black
                 px-1.5 py-[1px]
                 rounded-full font-bold
-                shadow-[0_0_10px_#facc15]
+                shadow-[0_0_10px_rgba(251,191,36,0.6)]
               ">
                 0
               </span>
