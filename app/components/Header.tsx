@@ -109,13 +109,14 @@ export default function Header() {
               transition-transform duration-300
               group-hover:scale-105
             ">
-              <Image
-                src="/logo1.png"
-                alt="Z-UP Fitness"
-                fill
-                className="object-cover"
-                priority
-              />
+           <Image
+  src="/logo1.png"
+  alt="Z-UP Fitness"
+  fill
+  sizes="(max-width: 768px) 100vw, 300px"
+  className="object-cover"
+  priority
+/>
             </div>
           </div>
         </Link>
